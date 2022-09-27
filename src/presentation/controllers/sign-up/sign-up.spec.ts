@@ -1,11 +1,12 @@
 import { SignUpController } from './sign-up'
-import { EmailValidator, AccountModel, AddAccount, AddAccountModel, HttpRequest } from './sign-up-protocols'
-import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import { ok, serverError, badRequest } from '../../helpers'
+import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
+import { EmailValidator, AccountModel, AddAccount, Validation, AddAccountModel, HttpRequest } from './sign-up-protocols'
 
 interface SutTypes {
   sut: SignUpController
   addAccountStub: AddAccount
+  validationStub: Validation
   emailValidatorStub: EmailValidator
 }
 
@@ -28,6 +29,16 @@ const makeEmailValidator = (): EmailValidator => {
   return new EmailValidatorStub()
 }
 
+const makeValidation = (): Validation => {
+  class ValidationStub implements Validation {
+    validate (input: any): Error {
+      return null
+    }
+  }
+
+  return new ValidationStub()
+}
+
 const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
@@ -47,11 +58,13 @@ const makeAddAccount = (): AddAccount => {
 
 const makeSut = (): SutTypes => {
   const addAccountStub = makeAddAccount()
+  const validationStub = makeValidation()
   const emailValidatorStub = makeEmailValidator()
-  const sut = new SignUpController(addAccountStub, emailValidatorStub)
+  const sut = new SignUpController(addAccountStub, validationStub, emailValidatorStub)
   return {
     sut,
     addAccountStub,
+    validationStub,
     emailValidatorStub
   }
 }
@@ -192,5 +205,13 @@ describe('SignUp Controller', () => {
     const httpResponse = await sut.handle(makeFakeRequest())
 
     expect(httpResponse).toEqual(ok(makeFakeAccount()))
+  })
+
+  it('should call Validation with correct values', async () => {
+    const { sut, validationStub } = makeSut()
+    const validate = jest.spyOn(validationStub, 'validate')
+    const httpRequest = makeFakeRequest()
+    await sut.handle(httpRequest)
+    expect(validate).toHaveBeenCalledWith(httpRequest.body)
   })
 })
