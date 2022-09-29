@@ -1,9 +1,9 @@
-import { LogControllerDecorator } from '../decorators/log'
-import { BcryptAdapater } from '../../infra/cryptography/bcrypt-adapter'
-import { DbAddAccount } from '../../data/usecases/add-account/db-add-account'
-import { LogMongoRepository } from '../../infra/db/mongodb/log-repository/log'
-import { SignUpController } from '../../presentation/controllers/sign-up/sign-up'
-import { AccountMongoRepository } from '../../infra/db/mongodb/account-repository/account'
+import { LogControllerDecorator } from '../../decorators/log'
+import { BcryptAdapater } from '../../../infra/cryptography/bcrypt-adapter'
+import { DbAddAccount } from '../../../data/usecases/add-account/db-add-account'
+import { LogMongoRepository } from '../../../infra/db/mongodb/log-repository/log'
+import { SignUpController } from '../../../presentation/controllers/sign-up/sign-up'
+import { AccountMongoRepository } from '../../../infra/db/mongodb/account-repository/account'
 import { makeSignUpValidation } from './signup-validation'
 
 export const makeSignUpController = () => {
