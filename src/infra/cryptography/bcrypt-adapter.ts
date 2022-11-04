@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { Encrypter } from '../../data/protocols/encrypter'
+import { Encrypter } from '../../data/protocols'
 
 export class BcryptAdapater implements Encrypter {
   constructor (private readonly salt: number) {}
