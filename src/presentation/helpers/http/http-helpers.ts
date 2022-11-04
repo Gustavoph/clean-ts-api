@@ -1,4 +1,4 @@
-import { UnauthorizedError, ServerError } from '../errors'
+import { UnauthorizedError, ServerError } from '../../errors'
 
 export const badRequest = (error: Error) => ({
   statusCode: 400,
