@@ -1,5 +1,5 @@
 import { LogControllerDecorator } from '../../decorators/log'
-import { BcryptAdapater } from '../../../infra/cryptography/bcrypt-adapter'
+import { BcryptAdapater } from '../../../infra/cryptography/bcrypt-adapter/bcrypt-adapter'
 import { DbAddAccount } from '../../../data/usecases/add-account/db-add-account'
 import { LogMongoRepository } from '../../../infra/db/mongodb/log-repository/log'
 import { SignUpController } from '../../../presentation/controllers/sign-up/sign-up'
