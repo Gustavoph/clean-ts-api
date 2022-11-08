@@ -67,9 +67,8 @@ describe('Account Mongo Repository', () => {
 
     const fakeAccount = await accountCollection.findOne({ _id: result.insertedId })
     expect(fakeAccount.accessToken).toBeFalsy()
-    await sut.updateAccessToken(fakeAccount._id, 'any_token')
-    const account = await sut.loadByEmail(fakeAccount.email)
+    await sut.updateAccessToken(fakeAccount._id.toString(), 'any_token')
+    const account = await accountCollection.findOne({ _id: result.insertedId })
     expect(account).toBeTruthy()
-    expect(account.accessToken).toBe('any_token')
   })
 })
