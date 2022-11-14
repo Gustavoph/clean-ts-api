@@ -20,6 +20,11 @@ export const unauthorized = () => ({
   body: new UnauthorizedError()
 })
 
+export const noContent = () => ({
+  statusCode: 200,
+  body: null
+})
+
 export const ok = (data: any) => ({
   statusCode: 200,
   body: data
