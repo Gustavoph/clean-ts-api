@@ -21,7 +21,7 @@ export const unauthorized = () => ({
 })
 
 export const noContent = () => ({
-  statusCode: 200,
+  statusCode: 204,
   body: null
 })
 
